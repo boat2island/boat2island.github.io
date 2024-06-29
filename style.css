@@ -43,6 +43,20 @@ footer{
 }
 }
 
+@media (min-width:600px) {
+    .skillGallery {
+        column-gap:170px;
+    }
+}
+
+@media (max-width:600px) {
+    .skillGallery {
+        column-gap:60px;
+    }
+}
+
+
+
 @media (max-width: 740px) {
     .textinfo {
         order: 2;
@@ -92,7 +106,6 @@ footer{
     justify-content: left;
     flex-direction: row;
     align-items: left;
-    column-gap:170px;
 }
 
 .skillBox{
