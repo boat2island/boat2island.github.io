@@ -19,7 +19,6 @@ footer{
     font-family: ui-sans-serif,-apple-system,system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,Helvetica,Apple Color Emoji,Arial,Segoe UI Emoji,Segoe UI Symbol;
 }
 
-
 .container{
     max-width:1152px;
     padding-top: 100px;
@@ -55,6 +54,12 @@ footer{
     }
 }
 
+@media (max-width:500px) {
+    .headerOutLink {
+        justify-content: center; /* 水平居中 */
+        align-items: center;
+    }
+}
 
 
 @media (max-width: 740px) {
@@ -69,6 +74,12 @@ footer{
         text-align: center;
     }
 }
+
+
+
+
+
+
 .name{
     line-height: 64px;
     color: rgb(45,174,107);; 
@@ -141,6 +152,10 @@ footer{
     display: flex;
     max-width:1152px;
     flex-direction: row-reverse;
+
+   
+
+
     margin: 0 auto;
     height: 80px;
 }
