@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>驶向绿洲-我能为你做什么</title>
+    <title>Only-Girl</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" sizes="32x32" href="image/bot.png">
@@ -11,17 +11,20 @@
   <body>
     <div class="container">
     <video id="player" src="https://dwz.mk/MVZVjy" 
-    controls="controls" width="800px" height="800px" 
+    controls="controls" width="100%" height="100%" 
     class="video-roll-transition video-roll-deg-scale" data-roll="true">
-
     </video>
-
     <footer>
-
     </footer>
-
     <style>
-
+video {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .video-roll-transition {
     transition: all 0.5s ease !important;
 }
@@ -53,30 +56,4 @@
       }
   </style>
 </head>
-<body>
-  <div id="typing"></div>
-
-  <script>
-      // 要显示的文本
-      const text = "你好，我是驶向绿洲";
-
-      // 获取显示文本的元素
-      const typingElement = document.getElementById("typing");
-
-      // 当前显示的字符索引
-      let index = 0;
-
-      // 打字效果的函数
-      function type() {
-          if (index < text.length) {
-              typingElement.textContent += text.charAt(index);
-              index++;
-              setTimeout(type, 400); // 调整时间间隔以更改打字速度
-          }
-      }
-
-      // 开始打字效果
-      type();
-  </script>
-  </body>
 </html>
