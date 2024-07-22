@@ -154,11 +154,28 @@
           </div>
 
       </div>
+
+
+    <video id="player" src="https://dwz.mk/MVZVjy" 
+    controls="controls" width="800px" height="800px" 
+    class="video-roll-transition video-roll-deg-scale" data-roll="true">
+
+    </video>
+
     <footer>
 
     </footer>
 
     <style>
+
+.video-roll-transition {
+    transition: all 0.5s ease !important;
+}
+.video-roll-deg-scale {
+    transform: rotate(0deg) scale3d(1, 1, 1) scale(1, 1) translate(0%, 0%) !important;
+    filter: unset;
+}
+      
       #typing {
           font-family: monospace;
           white-space: pre;
