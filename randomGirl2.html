@@ -1,132 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Custom Video Controls</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  #videoContainer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-  video {
-    width: auto;
-    height: 100%;
-    position: relative;
-    top: 0;
-    left: 0;
-    box-shadow: none;
-  }
-  .controls {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  #videoContainer:hover .controls {
-    visibility: visible;
-    opacity: 1;
-  }
-  .controls button, .controls input[type="range"] {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  .controls input[type="range"] {
-    flex: 1;
-    margin: 0 10px;
-  }
-  .controls button:focus, .controls input[type="range"]:focus {
-    outline: none;
-  }
-</style>
+    <meta charset="UTF-8">
+    <title>鼠标滚轮切换视频 - Video.js</title>
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <style>
+  
+    body{
+        margin:0 auto;
+    }
+    #my-video{
+     
+        width: 100%;
+        height: 100%;
+        outline: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+  </style>
+    </style>
 </head>
 <body>
-  <div id="videoContainer">
-    <video id="myVideo">
-      <source src="2.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <div class="controls">
-      <button id="playPause">Play</button>
-      <input type="range" id="seekBar" value="0">
-      <button id="mute">Mute</button>
-      <input type="range" id="volumeBar" min="0" max="1" step="0.1" value="1">
-      <button id="fullScreen">Full</button>
-    </div>
-  </div>
-  <script>
-    const video = document.getElementById('myVideo');
-    const playPauseButton = document.getElementById('playPause');
-    const muteButton = document.getElementById('mute');
-    const fullScreenButton = document.getElementById('fullScreen');
-    const seekBar = document.getElementById('seekBar');
-    const volumeBar = document.getElementById('volumeBar');
 
-    // Play/Pause button
-    playPauseButton.addEventListener('click', () => {
-      if (video.paused) {
-        video.play();
-        playPauseButton.textContent = 'Pause';
-      } else {
-        video.pause();
-        playPauseButton.textContent = 'Play';
-      }
-    });
+    <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="1000"
+    height="790"
+    data-setup="{}"
+  >
+    <source src="1.mp4" type="video/mp4" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </video>
 
-    // Mute/Unmute button
-    muteButton.addEventListener('click', () => {
-      video.muted = !video.muted;
-      muteButton.textContent = video.muted ? 'Unmute' : 'Mute';
-    });
+  <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const videos = [
+            '1.mp4',
+            '2.mp4',
+            '3.mp4'
+        ];
+        let currentVideoIndex = 0;
 
-    // Fullscreen button
-    fullScreenButton.addEventListener('click', () => {
-      if (video.requestFullscreen) {
-        video.requestFullscreen();
-      } else if (video.mozRequestFullScreen) { // Firefox
-        video.mozRequestFullScreen();
-      } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) { // IE/Edge
-        video.msRequestFullscreen();
-      }
-    });
+        const player = videojs('my-video');
 
-    // Update the seek bar as the video plays
-    video.addEventListener('timeupdate', () => {
-      const value = (100 / video.duration) * video.currentTime;
-      seekBar.value = value;
-    });
+        let lastScrollTime = Date.now();
 
-    // Seek video
-    seekBar.addEventListener('input', () => {
-      const time = video.duration * (seekBar.value / 100);
-      video.currentTime = time;
-    });
+        window.addEventListener('wheel', function(event) {
+            const currentTime = Date.now();
+            const timeDifference = currentTime - lastScrollTime;
 
-    // Update volume
-    volumeBar.addEventListener('input', () => {
-      video.volume = volumeBar.value;
+            if (timeDifference < 100) {
+                // 忽略太频繁的滚动
+                return;
+            }
+
+            if (event.deltaY < 0) {
+                // 向上滚动，切换到前一个视频
+                currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+            } else if (event.deltaY > 0) {
+                // 向下滚动，切换到下一个视频
+                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            }
+
+            player.src({ type: 'video/mp4', src: videos[currentVideoIndex] });
+            player.play();
+
+            // 更新最后一次滚动的时间
+            lastScrollTime = currentTime;
+        });
     });
-  </script>
+</script>
+
 </body>
 </html>

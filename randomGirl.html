@@ -1,10 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>鼠标滚轮切换视频 - Video.js</title>
     <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <style>
   
-    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
-    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
-  </head>
-  <style>
     body{
         margin:0 auto;
     }
@@ -19,39 +20,68 @@
     }
 
   </style>
-  <body>
+    </style>
+</head>
+<body>
+
     <video
-      id="my-video"
-      class="video-js"
-      controls
-      preload="auto"
-      width="1000"
-      height="790"
-      data-setup="{}"
-    >
-      <source src="1.mp4" type="video/mp4" />
-      <p class="vjs-no-js">
-        To view this video please enable JavaScript, and consider upgrading to a
-        web browser that
-        <a href="https://videojs.com/html5-video-support/" target="_blank"
-          >supports HTML5 video</a
-        >
-      </p>
-    </video>
-  
-    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
-    <script type="text/javascript">
-        function displayWindowSize() {
-            // 获取窗口的宽度和高度
-            var width = window.innerWidth;
-            var height = window.innerHeight;
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="1000"
+    height="790"
+    data-setup="{}"
+  >
+    <source src="1.mp4" type="video/mp4" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </video>
 
-            // 显示窗口的大小
-            document.getElementById("my-video").width = "宽度: " + width + "px, 高度: " + height + "px";
-        }
+  <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const videos = [
+            '1.mp4',
+            '2.mp4',
+            '3.mp4'
+        ];
+        let currentVideoIndex = 0;
 
-        // 在窗口加载时和调整大小时调用函数
-        window.onload = displayWindowSize;
-        window.onresize = displayWindowSize;
-    </script>
-  </body>
+        const player = videojs('my-video');
+
+        let lastScrollTime = Date.now();
+
+        window.addEventListener('wheel', function(event) {
+            const currentTime = Date.now();
+            const timeDifference = currentTime - lastScrollTime;
+
+            if (timeDifference < 100) {
+                // 忽略太频繁的滚动
+                return;
+            }
+
+            if (event.deltaY < 0) {
+                // 向上滚动，切换到前一个视频
+                currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+            } else if (event.deltaY > 0) {
+                // 向下滚动，切换到下一个视频
+                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            }
+
+            player.src({ type: 'video/mp4', src: videos[currentVideoIndex] });
+            player.play();
+
+            // 更新最后一次滚动的时间
+            lastScrollTime = currentTime;
+        });
+    });
+</script>
+
+</body>
+</html>
