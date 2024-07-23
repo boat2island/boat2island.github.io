@@ -1,59 +1,57 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Only-Girl</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="image/bot.png">
-    <link rel="preload" href="inter-roman-latin.Di8DUHzh.woff2" as="font" type="font/woff2" crossorigin="">
-    <meta charset="UTF-8" />
+<head>
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+  
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
   </head>
-  <body>
-    <div class="container">
-    <video id="player" src="2.mp4" 
-    controls="controls" width="100%" height="100%" 
-    class="video-roll-transition video-roll-deg-scale" data-roll="true">
-    </video>
-    <footer>
-    </footer>
-    <style>
-video {
-    width: 100%;
-    height: 100%;
-    outline: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.video-roll-transition {
-    transition: all 0.5s ease !important;
-}
-.video-roll-deg-scale {
-    transform: rotate(0deg) scale3d(1, 1, 1) scale(1, 1) translate(0%, 0%) !important;
-    filter: unset;
-}
-      
-      #typing {
-          font-family: monospace;
-          white-space: pre;
-          display: inline-block;
-          position: relative;
-      }
-      #typing::after {
-          content: '';
-          display: inline-block;
-          width: 2px;
-          background-color: black;
-          animation: blink 0.5s step-end infinite;
-          position: absolute;
-          right: 0;
-          top: 0;
-          bottom: 0;
-      }
-      @keyframes blink {
-          from, to { background-color: transparent; }
-          50% { background-color: black; }
-      }
+  <style>
+    body{
+        margin:0 auto;
+    }
+    #my-video{
+     
+        width: 100%;
+        height: 100%;
+        outline: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
   </style>
-</head>
-</html>
+  <body>
+    <video
+      id="my-video"
+      class="video-js"
+      controls
+      preload="auto"
+      width="1000"
+      height="790"
+      data-setup="{}"
+    >
+      <source src="1.mp4" type="video/mp4" />
+      <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank"
+          >supports HTML5 video</a
+        >
+      </p>
+    </video>
+  
+    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+    <script type="text/javascript">
+        function displayWindowSize() {
+            // 获取窗口的宽度和高度
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+
+            // 显示窗口的大小
+            document.getElementById("my-video").width = "宽度: " + width + "px, 高度: " + height + "px";
+        }
+
+        // 在窗口加载时和调整大小时调用函数
+        window.onload = displayWindowSize;
+        window.onresize = displayWindowSize;
+    </script>
+  </body>
